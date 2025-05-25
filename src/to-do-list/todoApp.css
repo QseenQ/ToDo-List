@@ -6,7 +6,7 @@
   max-width: 800px;
 	width: 95%;
 	max-width: 1000px;
-  margin: 40px auto;
+  margin: 0px auto;
   font-family: sans-serif;
   box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
@@ -46,6 +46,30 @@ input {
 
 .task-list {
   margin-top: 30px;
+}
+
+.task-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.task-index {
+  color: #aaa;
+  font-weight: bold;
+}
+
+.task-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.task-actions svg,
+.task-actions i,
+.task-actions img {
+  vertical-align: middle;
 }
 
 .task-row {
@@ -170,40 +194,55 @@ input {
     justify-content: flex-end;
     align-items: center;
   }
-
-  .task-row.editing {
-    flex-direction: column; /* но в режиме редактирования оставим вертикально */
-    align-items: flex-start;
-  }
 }
 
 @media (max-width: 480px) {
-	.todo-container h2 {
+  .todo-container h2 {
     font-size: 1.75rem;
     margin-bottom: 16px;
   }
 
-  .task-text {
-    font-size: 0.95rem;
-    width: 100%;
-    word-break: break-word;
-  }
-
   .task-row {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: stretch;
   }
 
-  .task-actions {
-    flex-direction: row;
+  .task-content {
+    flex-grow: 1;
+    width: auto;
+  }
+
+  .task-index {
+    margin-bottom: 4px;
+  }
+
+  .task-text {
     width: 100%;
-    justify-content: flex-end;
-    margin-top: 8px;
-    flex-wrap: wrap;
+    font-size: 1rem;
+  }
+
+   .task-actions {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;       /* прижать кнопки к правому краю */
+			justify-content: space-evenly; /* равномерно распределить по высоте */
+			gap: 12px;
+			height: 100%;                /* чтобы можно было равномерно распределить */
+			margin-top: 0;
   }
 
   .task-row button {
-    font-size: 1.1rem;
-    padding: 6px 8px;
+    width: auto; /* убери 100%, чтобы кнопки не были растянутыми */
+  }
+
+	.task-row.editing {
+    flex-direction: row !important;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .task-row.editing input {
+    margin-top: 8px;
+    width: 100%;
   }
 }

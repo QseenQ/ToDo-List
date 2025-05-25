@@ -1,10 +1,10 @@
 import { forwardRef } from 'react'
 
-const STATUS_CYCLE = ["new", "in-progress", "done"]
-const STATUS_ICONS = {
-  new: "🕒",
+  const STATUS_CYCLE = ["in-progress", "done"]
+	const STATUS_ICONS = {
+  "new": "🆕",
   "in-progress": "⚙️",
-  done: "✅",
+  "done": "✅",
 }
 
 const TodoRow = forwardRef(({ task, setTasks, onEdit, onDelete, onSave, index }, ref) => {
@@ -16,29 +16,35 @@ const TodoRow = forwardRef(({ task, setTasks, onEdit, onDelete, onSave, index },
     )
   }
 
-  const handleStatusToggle = () => {
-    const currentIndex = STATUS_CYCLE.indexOf(task.status || 'new')
-    const nextStatus = STATUS_CYCLE[(currentIndex + 1) % STATUS_CYCLE.length]
-    setTasks(prev =>
-      prev.map(t =>
-        t.id === task.id ? { ...t, status: nextStatus } : t
-      )
+const handleStatusToggle = () => {
+  const currentIndex = STATUS_CYCLE.indexOf(task.status || 'in-progress')
+  const nextStatus = STATUS_CYCLE[(currentIndex + 1) % STATUS_CYCLE.length]
+  setTasks(prev =>
+    prev.map(t =>
+      t.id === task.id ? { ...t, status: nextStatus } : t
     )
-  }
+  )
+}
 
   return task.isEditing ? (
     <div className="task-row editing" ref={ref}>
-      <span className="num-span">{index + 1}.</span>
-      <input
-        value={task.text}
-        onChange={e => handleChange(e.target.value)}
-      />
-      <button onClick={() => onSave(task.id, task.text)}>✅</button>
+      <div className="task-content">
+        <span className="task-index">{index + 1}.</span>
+        <input
+          value={task.text}
+          onChange={e => handleChange(e.target.value)}
+        />
+      </div>
+      <div className="task-actions">
+        <button onClick={() => onSave(task.id, task.text)}>✅</button>
+      </div>
     </div>
   ) : (
     <div className={`task-row ${task.status || 'new'}`} ref={ref}>
-      <span className="num-span">{index + 1}.</span>
-      <span className="task-text">{task.text}</span>
+      <div className="task-content">
+        <span className="task-index">{index + 1}.</span>
+        <span className="task-text">{task.text}</span>
+      </div>
       <div className="task-actions">
         <button onClick={handleStatusToggle} title="Статус задачи">
           {STATUS_ICONS[task.status || "new"]}
